@@ -74,7 +74,14 @@ document.querySelectorAll('.js-add-to-cart-button')
         quantity : 1
         });
       }
-      console.log(cart);
+
+      let totelCartQuantity = 0;
+      cart.forEach((item) =>{
+        totelCartQuantity += item.quantity;
+      })
+
+      document.querySelector('.js-cart-quantity').innerHTML = totelCartQuantity;
+      
     });
   });
   
