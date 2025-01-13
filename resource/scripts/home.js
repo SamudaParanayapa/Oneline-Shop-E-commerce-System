@@ -1,10 +1,9 @@
-import { cart } from "./data/cart.js";
+import { cart, addToCart } from "./data/cart.js";
 import { product } from "./data/product.js";
 
-
+/* Generating HTML code for each objects in product class */ 
 let productHTML = '';
 
-/*Generating HTML code for each objects in product class*/ 
 product.forEach((product) => {
   productHTML += `
     <div class="product-container">
@@ -53,48 +52,37 @@ product.forEach((product) => {
     </div>
     `;
 });
-
 document.querySelector('.js-product-grid').innerHTML = productHTML;
 
+
+/* This function calculates the total quantity of items in the shopping cart 
+ and updates the cart quantity display on the webpage. */
+function updateCartQuantity(){
+  let totelCartQuantity = 0;
+      cart.forEach((cartItem) =>{
+        totelCartQuantity += cartItem.quantity;
+      })
+      
+      document.querySelector('.js-cart-quantity').innerHTML = totelCartQuantity;
+}
+/* This code listens for clicks on "Add to Cart" buttons. When clicked, it gets the product ID, 
+the quantity selected, and the message element that shows "product added to cart". 
+It adds the product to the cart, updates the cart quantity display, and briefly shows 
+the "product added to cart" message, which disappears after 500 milliseconds. */
 document.querySelectorAll('.js-add-to-cart-button')
   .forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.productId;
-      
-      const qtyElement = button.closest('.product-container').querySelector('.js-product-quantity');
-      const qty = Number(qtyElement.value);
-      
-      let matchingitem;
-      document.querySelector('.js-product-quantity')
-      cart.forEach((item) => {
-        if(productId === item.productId){
-          matchingitem = item;
-        }
-      });
-      
-      if (matchingitem){
-        matchingitem.quantity += qty;
-      }else{
-        cart.push({
-        productId : productId,
-        quantity : qty
-        });
-      }
-
-      let totelCartQuantity = 0;
-      cart.forEach((item) =>{
-        totelCartQuantity += item.quantity;
-      })
-      
+      const quantitySelectElement = button.closest('.product-container').querySelector('.js-product-quantity');
       const productToCart = button.closest('.product-container').querySelector('.product-to-cart');
-      productToCart.classList.add('visible');
+    
+      addToCart(productId,quantitySelectElement);
+      updateCartQuantity();
 
+      productToCart.classList.add('visible');
       setTimeout(() => {
         productToCart.classList.remove('visible');
       }, 500);
-
-      document.querySelector('.js-cart-quantity').innerHTML = totelCartQuantity;
-      
     });
   });
   

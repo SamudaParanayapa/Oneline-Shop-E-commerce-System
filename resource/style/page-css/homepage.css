@@ -55,7 +55,7 @@
   height: 100%;
   max-width: 100%;
   max-height: 180px;  
-  object-fit: contain;  /* Keeps the aspect ratio */
+  object-fit: contain;  
 }
 .product-title{
   height: 40px;
@@ -91,14 +91,10 @@
   align-items: center;
   margin-bottom: 8px;
   transition: opacity 0.3s ease-in-out;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
   opacity: 0; 
 }
 .product-to-cart.visible {
-  opacity: 1; /* Fully visible */
+  opacity: 1; 
 }
 .product-to-cart img{
   height: 20px;

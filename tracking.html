@@ -16,36 +16,64 @@
   </head>
   <body>
     <div class="header">
-      <div class="first-header-section">
-        <div class="header-logo"><img src="resource/icons/logo.png" alt=""></div>
+      <div class="top-header-section">
 
-        <div class="search-bar">
+        <div class="top-header-left-section">
+          <img src="resource/icons/logo.png" alt="">
+        </div>
+
+        <div class="top-header-middle-section">
           <input class="search-box" type="text" placeholder="Search">
           <button class="search-button"><img class="search-icon" src="resource/icons/search-icon.png" alt=""></button>
         </div>
 
-        <div class="header-buttons">
-        
-          <a class="cart-link header-link" href="checkout.html">
-            <img class="notification-icon" src="resource/icons/notification-icon.png">
-            <div class="notification-quantity">2</div>
-          </a>
+        <div class="top-header-right-section">
+          <div class="notification-icon-container">
+            <a class="notification-indicator" href="checkout.html">
+              <img  src="resource/icons/notification-icon.png">
+              <div class="notification-quantity">0</div>
+            </a>
+          </div>
 
-          <img class="profile-icon" src="resource/icons/profile-icon.png" alt="">
+          <div class="profile-icon-container">
+            <a href="">
+              <img src="resource/icons/profile-icon.png" alt="">
+            </a>
+            
+          </div>
 
-          <a class="cart-link header-link" href="checkout.html">
-            <img class="cart-icon" src="resource/icons/cart-icon.png">
-            <div class="cart-quantity">3</div>
-          </a>
+          <div class="cart-icon-container">
+            <a class="cart-indicator " href="checkout.html">
+              <img src="resource/icons/cart-icon.png">
+              <div class="cart-quantity js-cart-quantity">0</div>
+            </a>
+          </div>
         </div>
       </div>
 
-      <div class="second-header-section">
-        <a href="home.html"><button class="navigation-button home-navigation-button">Home</button></a>
-        <button class="navigation-button">Categories</button>
-        <button class="navigation-button">Help & Support</button>
-        <a href="orders.html"><button class="navigation-button">Orders & Returns</button></a>
-        <button class="navigation-button">Contact Us</button>
+      <div class="bottom-header-section">
+        <a href="home.html">
+          <button class="navigation-button home-navigation-button">
+            Home
+          </button></a>
+
+        <button class="navigation-button">
+          Categories
+        </button>
+
+        <button class="navigation-button">
+          Help & Support
+        </button>
+
+        <a href="orders.html">
+          <button class="navigation-button">
+            Orders & Returns
+          </button>
+        </a>
+
+        <button class="navigation-button">
+          Contact Us
+        </button>
       </div>
     </div>
 
