@@ -1,3 +1,6 @@
+import { cart } from "./data/cart.js";
+
+
 let productHTML = '';
 
 /*Generating HTML code for each objects in product class*/ 
@@ -23,8 +26,8 @@ product.forEach((product) => {
         LKR ${(product.priceCent/100).toFixed(2)}
       </div>
 
-      <div class="product-quantity">
-        <select>
+      <div class="product-quantity ">
+        <select class = "js-product-quantity">
           <option selected value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -53,25 +56,27 @@ product.forEach((product) => {
 document.querySelector('.js-product-grid').innerHTML = productHTML;
 
 document.querySelectorAll('.js-add-to-cart-button')
-
   .forEach((button) => {
     button.addEventListener('click', () => {
       const productId = button.dataset.productId;
-  
+      
+      const qtyElement = button.closest('.product-container').querySelector('.js-product-quantity');
+      const qty = Number(qtyElement.value);
+      
       let matchingitem;
-
+      document.querySelector('.js-product-quantity')
       cart.forEach((item) => {
         if(productId === item.productId){
           matchingitem = item;
         }
       });
-
+      
       if (matchingitem){
-        matchingitem.quantity += 1;
+        matchingitem.quantity += qty;
       }else{
         cart.push({
         productId : productId,
-        quantity : 1
+        quantity : qty
         });
       }
 
@@ -79,6 +84,13 @@ document.querySelectorAll('.js-add-to-cart-button')
       cart.forEach((item) =>{
         totelCartQuantity += item.quantity;
       })
+      
+      const productToCart = button.closest('.product-container').querySelector('.product-to-cart');
+      productToCart.classList.add('visible');
+
+      setTimeout(() => {
+        productToCart.classList.remove('visible');
+      }, 500);
 
       document.querySelector('.js-cart-quantity').innerHTML = totelCartQuantity;
       
