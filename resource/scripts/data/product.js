@@ -1,4 +1,4 @@
- const product = [{
+  export const product = [{
   id : '001',
   image : 'resource/product/iphone-13-pro.webp',
   name :'Apple iphone 13 pro - 256GB',
