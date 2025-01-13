@@ -54,7 +54,6 @@ product.forEach((product) => {
 });
 document.querySelector('.js-product-grid').innerHTML = productHTML;
 
-
 /* This function calculates the total quantity of items in the shopping cart 
  and updates the cart quantity display on the webpage. */
 function updateCartQuantity(){

@@ -1,4 +1,10 @@
-export const cart = [];
+export const cart = [{
+  productId : '003',
+  quantity : 2
+  },{
+  productId : '002',
+  quantity : 6
+  }];
 
 /*  This function gets the selected value from the <select> element and adds it to the cart.
 If the product is already in the cart, it updates the quantity. 
