@@ -1,6 +1,6 @@
-export const cart = [{
+export let cart = [{
   productId : '003',
-  quantity : 2
+  quantity : 3
   },{
   productId : '002',
   quantity : 6
@@ -28,4 +28,21 @@ export function addToCart(productId,quantitySelectElement){
     quantity : quantity
     });
   }
+}
+
+/*Removes a product from the cart by its productId.
+It creates a new array with all products except the one to be removed,
+and updates the cart array with the filtered (newCart) array.*/
+export function removeFromCart(productId){
+  const newCart = [];
+
+  cart.forEach((cartItem) =>{
+    const stayProduct = cartItem.productId
+
+    if (productId != stayProduct){
+      newCart.push(cartItem)
+    }
+  })
+
+  cart = newCart;
 }
