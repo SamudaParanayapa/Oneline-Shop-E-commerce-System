@@ -1,10 +1,18 @@
-export let cart = [{
+export let cart = JSON.parse(localStorage.getItem('cart')); 
+
+if(!cart){  
+cart = [{
   productId : '003',
   quantity : 3
   },{
   productId : '002',
   quantity : 6
   }];
+}
+
+export function saveToStorage(){
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
 
 /*  This function gets the selected value from the <select> element and adds it to the cart.
 If the product is already in the cart, it updates the quantity. 
@@ -27,7 +35,9 @@ export function addToCart(productId,quantitySelectElement){
     productId : productId,
     quantity : quantity
     });
+    console.log(quantity);
   }
+  saveToStorage();
 }
 
 /*Removes a product from the cart by its productId.
@@ -45,4 +55,5 @@ export function removeFromCart(productId){
   })
 
   cart = newCart;
+  saveToStorage();
 }
