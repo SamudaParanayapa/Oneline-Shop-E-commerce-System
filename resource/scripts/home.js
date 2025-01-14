@@ -1,4 +1,4 @@
-import { cart, addToCart } from "./data/cart.js";
+import { cart, addToCart,cartQantityCount } from "./data/cart.js";
 import { product } from "./data/product.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -58,10 +58,7 @@ document.querySelector('.js-product-grid').innerHTML = productHTML;
 /* This function calculates the total quantity of items in the shopping cart 
  and updates the cart quantity display on the webpage. */
 function updateCartQuantity(){
-  let totelCartQuantity = 0;
-      cart.forEach((cartItem) =>{
-        totelCartQuantity += cartItem.quantity;
-      })
+  let totelCartQuantity = cartQantityCount(cart);
       
       document.querySelector('.js-cart-quantity').innerHTML = totelCartQuantity;
 }
