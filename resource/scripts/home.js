@@ -1,9 +1,11 @@
-import { cart, addToCart,cartQantityCount } from "./data/cart.js";
+import { cart, addToCart,cartQantityCount,saveToStorage} from "./data/cart.js";
 import { product } from "./data/product.js";
 import { formatCurrency } from "./utils/money.js";
 
 /* Generating HTML code for each objects in product class */ 
 let productHTML = '';
+
+updateCartQuantity();
 
 product.forEach((product) => {
   productHTML += `
