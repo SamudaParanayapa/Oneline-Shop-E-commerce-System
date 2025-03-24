@@ -67,7 +67,7 @@
 }
 
 .return-to-home-link {
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-size: 23px;
   text-decoration: none;
   cursor: pointer;
@@ -91,12 +91,16 @@
 }
 
 .checkout-header-right-section {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 2px,solid;
+  border-radius: 20px;
+  border-color: white;
   text-align: right;
   width: 150px;
 }
 
-@media (max-width: 1000px) {
-  .checkout-header-right-section {
-    width: auto;
-  }
-}
+

@@ -1,119 +1,81 @@
-import { cart, removeFromCart, cartQantityCount } from "./data/cart.js";
-import {product} from "./data/product.js";
-import { formatCurrency } from "./utils/money.js";
+import { cart, removeFromCart, cartQuantityCount } from './data/cart.js';
+import { product } from './data/product.js';
+import { formatCurrency } from './utils/money.js';
 
+// Render cart items
+function renderCartItems() {
+  let cartHTML = '';
 
-let cartHTML = '';
+  cart.forEach((cartItem) => {
+    const productId = cartItem.productId;
+    const matchingProduct = product.find((product) => product.id === productId);
 
-cart.forEach((cartItem) => {
-  const productId = cartItem.productId;
+    if (!matchingProduct) return;
 
-  let matchingproduct;
-
-  product.forEach((product)=>{
-    if(product.id === productId){
-      matchingproduct = product ;
-    }
-  })
- 
-
-  cartHTML += `
-            <div class="cart-item-container js-cart-item-container-${productId}">
-            <div class="delivery-date">
-              Delivery date: Tuesday, June 21
-            </div>
-
-            <div class="cart-item-details-grid">
-              <img class="product-image"
-                src="${matchingproduct.image}">
-
-              <div class="cart-item-details">
-                <div class="product-name">
-                  ${matchingproduct.name}
-                </div>
-                <div class="product-price">
-                  LKR ${formatCurrency(matchingproduct.priceCent)}
-                </div>
-                <div class="product-quantity">
-                  <span>
-                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-                  </span>
-                  <span class="update-quantity-link link-primary">
-                    Update
-                  </span>
-                  <span class="delete-quantity-link link-primary js-delete-link" data-product-id ="${matchingproduct.id}">
-                    Delete
-                  </span>
-                </div>
-              </div>
-
-              <div class="delivery-options">
-                <div class="delivery-options-title">
-                  Choose a delivery option:
-                </div>
-                <div class="delivery-option">
-                  <input type="radio" checked
-                    class="delivery-option-input"
-                    name="delivery-option-${matchingproduct.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Tuesday, June 21
-                    </div>
-                    <div class="delivery-option-price">
-                      FREE Shipping
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${matchingproduct.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Wednesday, June 15
-                    </div>
-                    <div class="delivery-option-price">
-                     + LKR 350 - Shipping charge 
-                    </div>
-                  </div>
-                </div>
-                <div class="delivery-option">
-                  <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${matchingproduct.id}">
-                  <div>
-                    <div class="delivery-option-date">
-                      Monday, June 13
-                    </div>
-                    <div class="delivery-option-price">
-                      +LKR 450 - Shipping charge 
-                    </div>
-                  </div>
-                </div>
-              </div>
+    cartHTML += `
+      <div class="cart-item-container js-cart-item-container-${productId}">
+        <div class="cart-item-details-grid">
+          <img class="product-image" src="${matchingProduct.image}">
+          <div class="cart-item-details">
+            <div class="product-name">${matchingProduct.name}</div>
+            <div class="product-price">LKR ${formatCurrency(matchingProduct.priceCent)}</div>
+            <div class="product-quantity">
+              <span>Quantity: <span class="quantity-label">${cartItem.quantity}</span></span>
+              <span class="update-quantity-link link-primary">Update</span>
+              <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</span>
             </div>
           </div>
-        `;
-});
-
-document.querySelector('.js-order-summary').innerHTML = cartHTML; //DOM loads from here
-
-document.querySelectorAll('.js-delete-link').forEach((link) => {
-  link.addEventListener('click', () => {
-    const productId = link.dataset.productId;
-    removeFromCart(productId);
-    
-    const container = document.querySelector(
-      `.js-cart-item-container-${productId}`
-    );
-    container.remove();
-    itemcount();
+        </div>
+      </div>
+    `;
   });
+
+  document.querySelector('.js-order-summary').innerHTML = cartHTML;
+
+  document.querySelectorAll('.js-delete-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      const productId = link.dataset.productId;
+      removeFromCart(productId);
+      renderCartItems();
+      updateCartQuantity();
+      updateTotalPrice();
+    });
+  });
+}
+
+// Calculate and display the total price
+function updateTotalPrice() {
+  let totalPrice = 0;
+  cart.forEach((cartItem) => {
+    const matchingProduct = product.find((product) => product.id === cartItem.productId);
+    if (matchingProduct) {
+      totalPrice += matchingProduct.priceCent * cartItem.quantity;
+    }
+  });
+
+  document.querySelector('.js-total-price').innerText = `LKR ${formatCurrency(totalPrice)}`;
+}
+
+// Update cart quantity display
+function updateCartQuantity() {
+  const cartQuantity = cartQuantityCount();
+  document.querySelector('.js-cart-quantity').innerText = `${cartQuantity} items`;
+}
+
+// Handle checkout button click
+document.querySelector('.js-checkout-btn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert('Your cart is empty!');
+    return;
+  }
+  alert('Proceeding to checkout...');
+  localStorage.removeItem('cart');
+  renderCartItems();
+  updateTotalPrice();
+  updateCartQuantity();
 });
 
-itemcount();
-function itemcount(){
-let cartQantity = cartQantityCount(cart);
-let checkoutQantityHTML = `${cartQantity} items`;
-document.querySelector('.js-returnToHome-quantity').innerHTML = checkoutQantityHTML;
-}
+// Initial render
+renderCartItems();
+updateTotalPrice();
+updateCartQuantity();
